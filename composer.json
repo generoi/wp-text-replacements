@@ -1,9 +1,9 @@
 {
-  "name": "generoi/text-replacements",
+  "name": "generoi/wp-text-replacements",
   "type": "wordpress-plugin",
   "license": "MIT",
   "description": "Replace text",
-  "homepage": "https://github.com/generoi/text-replacements",
+  "homepage": "https://github.com/generoi/wp-text-replacements",
   "authors": [
     {
       "name": "Oskar Schöldström",
@@ -14,7 +14,7 @@
     "wordpress"
   ],
   "support": {
-    "issues": "https://github.com/generoi/text-replacements/issues"
+    "issues": "https://github.com/generoi/wp-text-replacements/issues"
   },
   "repositories": [
     {
