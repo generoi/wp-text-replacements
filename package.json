@@ -1,0 +1,60 @@
+{
+  "name": "text-replacements",
+  "version": "0.1.0",
+  "description": "Replace text",
+  "main": "assets/scripts/plugin.js",
+  "scripts": {
+    "dev": "NODE_ENV=development node_modules/webpack/bin/webpack.js --progress --hide-modules --config=node_modules/laravel-mix/setup/webpack.config.js",
+    "watch": "NODE_ENV=development node_modules/webpack/bin/webpack.js --watch --progress --hide-modules --config=node_modules/laravel-mix/setup/webpack.config.js",
+    "hot": "NODE_ENV=development webpack-dev-server --inline --hot --config=node_modules/laravel-mix/setup/webpack.config.js",
+    "production": "NODE_ENV=production node_modules/webpack/bin/webpack.js --progress --hide-modules --config=node_modules/laravel-mix/setup/webpack.config.js",
+    "lint": "npm run -s lint:scripts && npm run -s lint:styles",
+    "lint:scripts": "eslint *.js assets/scripts",
+    "lint:styles": "stylelint assets/styles/**/*.{css,scss}",
+    "test": "npm run -s lint && composer test",
+    "precommit": "npm run test",
+    "lang": "npm run lang:pot && npm run lang:mo",
+    "lang:pot": "wp-pot --src '*.php' --src 'src/**/*.php'--src 'languages/**/*.php' --team 'Genero <developers@genero.fi>' --package 'text-replacements' >| languages/text-replacements.pot",
+    "lang:mo": "for file in `find . -name \"*.po\"` ; do msgfmt -o ${file/.po/.mo} $file; done"
+  },
+  "browserslist": [
+    "last 2 versions",
+    "ie >= 11",
+    "Android >= 4.4",
+    "ios >= 8"
+  ],
+  "eslintConfig": {
+    "root": true,
+    "extends": [
+      "plugin:genero/recommended",
+      "plugin:genero/wordpress"
+    ]
+  },
+  "stylelint": {
+    "extends": "stylelint-config-genero"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/generoi/text-replacements.git"
+  },
+  "author": "Oskar Schöldström",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/generoi/text-replacements/issues"
+  },
+  "homepage": "https://github.com/generoi/text-replacements#readme",
+  "engines": {
+    "node": ">= 6.9.4"
+  },
+  "devDependencies": {
+    "eslint": "^4.19.0",
+    "eslint-plugin-genero": "git+https://github.com/generoi/eslint-plugin-genero.git",
+    "eslint-plugin-import": "^2.13.0",
+    "husky": "^0.14.3",
+    "laravel-mix": "^2.1.11",
+    "stylelint": "^9.3.0",
+    "stylelint-config-genero": "git+https://github.com/generoi/stylelint-config-genero.git",
+    "wp-pot-cli": "^1.2.1"
+  },
+  "dependencies": {}
+}
