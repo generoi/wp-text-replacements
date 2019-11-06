@@ -100,12 +100,12 @@ class StringFinder
 
             foreach ($matches[1] as $idx => $string) {
                 $domain = !empty($matches[2][$idx]) ? $matches[2][$idx] : '';
+                $id = $domain . ':' . esc_attr($string);
 
                 if (!in_array($domain, $this->domains)) {
                     continue;
                 }
-
-                $strings["$domain:$string"] = [
+                $strings[$id] = [
                     'search' => $string,
                     'replace' => null,
                     'domain' => $domain,
