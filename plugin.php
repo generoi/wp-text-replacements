@@ -103,6 +103,7 @@ class Plugin
         }
 
         foreach ($values as $id => $value) {
+            $id = esc_attr($id);
             if (!isset($strings[$id])) {
                 continue;
             }
