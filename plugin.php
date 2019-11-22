@@ -121,7 +121,7 @@ class Plugin
         if (is_array($strings)) {
             foreach ($strings as $id => $data) {
                 if ($data['replace']) {
-                    $settings[$id]['replace'] = wp_kses_post($data['replace']);
+                    $settings[$id]['replace'] = wp_kses_post(stripslashes($data['replace']));
                 }
             }
         }
