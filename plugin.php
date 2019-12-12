@@ -81,10 +81,6 @@ class Plugin
 
     public function admin_page()
     {
-        if (!current_user_can('manage_options')) {
-            wp_die('Unauthorized user');
-        }
-
         $finder = new StringFinder();
         $finder->setFileExtensions(apply_filters('text-replacements/scan/extensions', $finder->getFileExtensions()));
         $finder->setDomains(apply_filters('text-replacements/scan/domains', []));
