@@ -54,6 +54,11 @@ class StringFinder
     {
         $files = [];
         foreach ($dirs as $dir) {
+
+            if (is_file($dir)) {
+                $files = array_merge($files, [$dir]);
+                continue;
+            }
             $files = array_merge($files, $this->getFilesFromDir($dir));
         }
 
