@@ -46,7 +46,7 @@ class Plugin
 
         Puc_v4_Factory::buildUpdateChecker($this->github_url, __FILE__, $this->plugin_name);
 
-        add_action('plugins_loaded', [$this, 'init']);
+        add_action('plugins_loaded', [$this, 'init'], 0);
     }
 
     public function init()
