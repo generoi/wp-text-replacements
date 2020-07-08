@@ -34,7 +34,7 @@ class Plugin
     public $plugin_url;
     public $github_url = 'https://github.com/generoi/text-replacements';
 
-    protected $backend;
+    protected $strings;
 
     public function __construct()
     {
@@ -51,11 +51,16 @@ class Plugin
 
     public function init()
     {
-        $this->strings = get_option('text_replacements', []);
+        $this->loadStrings();
 
         add_action('init', [$this, 'load_textdomain']);
         add_action('admin_menu', [$this, 'add_options_page']);
         add_filter('gettext', [$this, 'gettext'], 10, 3);
+    }
+
+    public function loadStrings()
+    {
+        $this->strings = get_option('text_replacements', []);
     }
 
     public function gettext($translation, $text, $domain)
