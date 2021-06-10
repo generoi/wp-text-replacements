@@ -56,6 +56,7 @@ class Plugin
         add_action('init', [$this, 'load_textdomain']);
         add_action('admin_menu', [$this, 'add_options_page']);
         add_filter('gettext', [$this, 'gettext'], 10, 3);
+        add_filter('ngettext', [$this, 'ngettext'], 10, 5);
     }
 
     public function loadStrings()
@@ -65,6 +66,16 @@ class Plugin
 
     public function gettext($translation, $text, $domain)
     {
+        if (isset($this->strings["$domain:$text"]['replace'])) {
+            return $this->strings["$domain:$text"]['replace'];
+        }
+
+        return $translation;
+    }
+
+    public function ngettext($translation, $single, $plural, $number, $domain)
+    {
+        $text = $number === 1 ? $single : $plural;
         if (isset($this->strings["$domain:$text"]['replace'])) {
             return $this->strings["$domain:$text"]['replace'];
         }
