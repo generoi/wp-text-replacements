@@ -11,36 +11,46 @@ class StringFinder
     /** @var string */
     const REGEX_ARG = '[\s]*[\'\"](.*?)[\'\"][\s]*';
 
-    /** @var array */
-    protected $file_extensions = [
+    /** @var string[] */
+    protected array $file_extensions = [
         'php',
         'inc',
         'twig',
     ];
 
-    protected $ignore_paths = [
+    /** @var string[] */
+    protected array $ignore_paths = [
         'node_modules/',
         'vendor/',
     ];
 
-    /** @var array */
+    /** @var string[] */
     protected $domains = [];
 
     public function __construct()
     {
     }
 
-    public function getFileExtensions()
+    /**
+     * @return string[]
+     */
+    public function getFileExtensions(): array
     {
         return $this->file_extensions;
     }
 
-    public function setFileExtensions(array $extensions)
+    /**
+     * @param string[] $extensions
+     */
+    public function setFileExtensions(array $extensions): void
     {
         $this->file_extensions = $extensions;
     }
 
-    public function setDomains(array $domains)
+    /**
+     * @param string[] $domains
+     */
+    public function setDomains(array $domains): void
     {
         $this->domains = $domains;
     }
@@ -48,13 +58,13 @@ class StringFinder
     /**
      * Find and register all strings in the theme.
      *
-     * @param array $dirs
+     * @param string[] $dirs
+     * @return array<string,array{search:string,replace:?string,domain:string}>
      */
-    public function scan(array $dirs)
+    public function scan(array $dirs): array
     {
         $files = [];
         foreach ($dirs as $dir) {
-
             if (is_file($dir)) {
                 $files = array_merge($files, [$dir]);
                 continue;
@@ -77,7 +87,7 @@ class StringFinder
         $di = new RecursiveDirectoryIterator($dir, RecursiveDirectoryIterator::SKIP_DOTS);
         $iterator = new RecursiveIteratorIterator($di);
         $iterator = new CallbackFilterIterator($iterator, [$this, 'filterPaths']);
-        $results = [];
+        $result = [];
         foreach ($iterator as $file) {
             if (!in_array(pathinfo($file, PATHINFO_EXTENSION), $this->file_extensions)) {
                 continue;
@@ -91,9 +101,9 @@ class StringFinder
      * Get all translatable strings from the list of files.
      *
      * @param  string[] $files
-     * @return array
+     * @return array<string,array{search:string,replace:?string,domain:string}>
      */
-    public function getStrings($files)
+    public function getStrings($files): array
     {
         $strings = [];
         foreach ($files as $file) {
@@ -120,10 +130,10 @@ class StringFinder
         return $strings;
     }
 
-    public function filterPaths($file)
+    public function filterPaths(string $file): bool
     {
         foreach ($this->ignore_paths as $path) {
-            if (strpos($file, $path) === true) {
+            if (strpos($file, $path) !== false) {
                 return false;
             }
         }
